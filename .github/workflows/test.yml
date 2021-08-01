@@ -1,0 +1,13 @@
+name: run ssh
+on: workflow_dispatch
+defaults:
+  run:
+    shell: bash
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Running ssh test script
+      run: |
+          sh ./test.sh
