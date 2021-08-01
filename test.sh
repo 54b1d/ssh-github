@@ -1,6 +1,6 @@
 pkill -9 tmate
 pwd
-cd ~
+cd ~/work/
 pwd
 ls
 #wget -nc https://github.com/tmate-io/tmate/releases/download/2.4.0/tmate-2.4.0-static-linux-i386.tar.xz &> /dev/null
