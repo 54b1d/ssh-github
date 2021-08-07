@@ -1,47 +1,18 @@
-name: Ubuntu SSH
+name: UbuntuSH
 on: 
   workflow_dispatch:
-    inputs:
-      authtoken:
-        description: 'Ngrok Auth Token'
-        required: true
-      computername:
-        description: 'Computer Name'
-        default: 'ZVM'
-        required: true
-      username:
-        description: 'Username'
-        default: 'ZUser'
-        required: true
-      password:
-        description: 'Password (minimum 8-10 numbers/characters)'
-        required: true
-
 defaults:
   run:
     shell: bash
-
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     steps:
+    - uses: fastai/workflows/ssh@master
+      with:
+        ssh_key: ${{ secrets.SSH_KEY }}
+        key_file: id_ecdsa
     - uses: actions/checkout@v2
-    - name: Mask Code & Pin.
-      run: |
-        _Token=$(jq -r '.inputs.authtoken' $GITHUB_EVENT_PATH)
-        _CName=$(jq -r '.inputs.computername' $GITHUB_EVENT_PATH)
-        _Pass=$(jq -r '.inputs.password' $GITHUB_EVENT_PATH)
-        echo ::add-mask::$_Token
-        echo ::add-mask::$_CName
-        echo ::add-mask::$_Pass
-        echo NGROK_TOKEN="$_Token" >> $GITHUB_ENV
-        echo ComputerName="$_CName" >> $GITHUB_ENV
-        echo Password="$_Pass" >> $GITHUB_ENV
-    - name: Setup Environment
-      run: |
-        sudo apt-get update
-        bash Setup.sh "${{ env.NGROK_TOKEN }}" "${{ env.ComputerName }}" "${{ github.event.inputs.username }}" "${{ env.Password }}"
-    - name: IP for Connect to your SSH.
-      run: bash ip.sh "${{ github.event.inputs.username }}"
-    - name: Keep Alive.
-      run: ping 127.0.0.1 > null
+    - run: source ubuntu-run.sh
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
