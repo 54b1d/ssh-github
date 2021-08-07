@@ -32,5 +32,4 @@ jobs:
 
     - name: Setup tmate session
 
-      uses: mxschmitt/action-tmate@master
-
+      uses: mxschmitt/action-tmate@v3
