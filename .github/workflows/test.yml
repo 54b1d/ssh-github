@@ -1,13 +1,36 @@
-name: run ssh
-on: workflow_dispatch
+name: Ubuntu_Server
+
+on: 
+
+  workflow_dispatch:
+
 defaults:
+
   run:
+
     shell: bash
+
 jobs:
+
   build:
-    runs-on: ubuntu-latest
+
+    runs-on: ubuntu-18.04
+
     steps:
+
+    - uses: fastai/workflows/ssh@master
+
+      with:
+
+        ssh_key: ${{ secrets.SSH_KEY }}
+
+        key_file: id_ecdsa
+
     - uses: actions/checkout@v2
-    - name: Running ssh test script
-      run: |
-          sh ./test.sh
+
+    - run: source ubuntu-run.sh
+
+    - name: Setup tmate session
+
+      uses: mxschmitt/action-tmate@master
+
