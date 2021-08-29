@@ -1,6 +1,6 @@
 echo this can run commands in terminal tho
 sudo apt-get remove docker docker-engine docker.io containerd runc
-apt update
+sudo apt update
 sudo apt-get install \
     apt-transport-https \
     ca-certificates \
