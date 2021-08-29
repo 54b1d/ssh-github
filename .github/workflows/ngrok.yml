@@ -1,4 +1,4 @@
-name: UbuntuSH
+name: ngrok
 on: 
   workflow_dispatch:
 defaults:
