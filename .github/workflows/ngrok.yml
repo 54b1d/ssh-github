@@ -3,9 +3,6 @@ on:
   workflow_dispatch:
   repository_dispatch:
     types: [opened]
-defaults:
-  run:
-    shell: bash
 jobs:
   build:
     runs-on: ubuntu-18.04
